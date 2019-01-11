@@ -31,7 +31,7 @@ def interact_with_device(recognizer, microphone):
     with microphone as source:
         # adjust to the ambient noise
         recognizer.adjust_for_ambient_noise(source, duration=0.5)
-        print "let's talk to the device !"
+        print("let's talk to the device !")
 
         # set up the response object
         response = {
@@ -55,12 +55,12 @@ def interact_with_device(recognizer, microphone):
         # API was unreachable or unresponsive
         response["success"] = False
         response["error"] = "API unavailable"
-        print response["error"]
+        print(response["error"])
     except sr.UnknownValueError:
         # speech was unintelligible
         response["success"] = False
         response["error"] = "Unable to recognize speech"
-        print response["error"]
+        print(response["error"])
     return response
 
 
@@ -70,31 +70,31 @@ def process_result(result):
 
     # means that the user wants to stop the interaction with the device
     if text.__contains__("stop"):
-        print "[cmd] : stop"
+        print("[cmd] : stop")
         global stop_word_detected
         stop_word_detected = True
         return True
 
     # switch mode
     elif text.__contains__("mode") and (text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production")):
-        print "[cmd switch] : solar panel mode"
+        print("[cmd switch] : solar panel mode")
         return True
     elif text.__contains__("mode") and text.__contains__("import"):
-        print "[cmd switch] : import mode"
+        print("[cmd switch] : import mode")
         return True
     elif text.__contains__("mode") and text.__contains__("export"):
-        print "[cmd switch] : export mode"
+        print("[cmd switch] : export mode")
         return True
     elif text.__contains__("heure"):
-        print "[cmd switch] : time mode"
+        print("[cmd switch] : time mode")
         return True
     # set an alarm
     elif text.__contains__(u"réveil") or text.__contains__("alarm"):
-        print "[cmd set] : set an alarm"
+        print("[cmd set] : set an alarm")
         return True
     # wrong command
     else:
-        print "vocal command is not valid... try again ! "
+        print("vocal command is not valid... try again ! ")
         return False
 
 
@@ -122,7 +122,7 @@ def start_word_detected():
     global stop_word_detected
     stop_word_detected = False
 
-    print "back to detecting hotword"
+    print("back to detecting hotword")
     # start the thread of the detector
     global startDetector
     startDetector = snowboydecoder.HotwordDetector(startModel, sensitivity=0.5)
