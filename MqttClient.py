@@ -47,7 +47,7 @@ class MqttClient:
         self._PM1 = 0
         self._PM2 = 0
         self._PM3 = 0
-        self._maxValue = 8000
+        self._maxValue = 1500
 
         if not self._useReconnectClient:
             self._client = mqtt.Client()
@@ -166,7 +166,6 @@ class MqttClient:
         # active power import
         if msg.topic.find("obis_1_0_1_7_0_255_2") != -1:
             self._importPower = json.loads(msg.payload)['value']
-            print(self.getImportPower())
         # active power export
         if msg.topic.find("obis_1_0_2_7_0_255_2") != -1:
             self._exportPower = json.loads(msg.payload)['value']

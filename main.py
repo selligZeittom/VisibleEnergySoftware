@@ -11,7 +11,7 @@ production = ledsMeter(addressI2C=0x71, isInConsumption=False, valuePeak=8000)
 display = sevenSegmentDigit()
 servoMotor = servoMotor()
 logic = EnergyLogic(houseClient, consumption, production, display, servoMotor)
-speechProcessing = SpeechProcessing(logic)  # this start the thread speech processing
+
 
 
 class DisplayThread(threading.Thread):
@@ -32,7 +32,7 @@ class ChangeModeThread(threading.Thread):
     def run(self):
         while True:
             logic.changeMode(raw_input("type the mode you want to go to (solar, water, exportation, importation): "))
-            # time.sleep(10)
+            time.sleep(10)
 
 
 t = DisplayThread()
@@ -40,6 +40,10 @@ t.start()
 
 u = ChangeModeThread()
 u.start()
+
+speechProcessing = SpeechProcessing(logic)  # this start the thread speech processing
+
+
 
 
 

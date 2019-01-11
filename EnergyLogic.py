@@ -9,10 +9,11 @@ class EnergyLogic:
         self._led2 = led2   # production led
         self._display = display
         self._servo = servoMotor
-        self._TTS = textSpeaker()
+        # self._TTS = textSpeaker()
         self._mode = "exportation"
 
     def logic(self):
+        print("logic update")
         if self._mode.find("solar") != -1:
             self._led1.calcNbLedOn(self._client.getPM2())
             self._led2.calcNbLedOn(self._client.getPM3())
@@ -47,14 +48,20 @@ class EnergyLogic:
 
     def otherLogic(self):
         if self._client.getExportPower() > 2000:
-            self._TTS.say("Penser a allumer une machine a laver")
+            print("power on the wash machine")
+            # self._TTS.say("Penser a allumer une machine a laver")
 
         if self._client.getImportPower() > 1000:
-            self._TTS.say("Penser a eteindre la lumiere")
+            print("power off the light")
+            # self._TTS.say("Penser a eteindre la lumiere")
 
     def changeMode(self, mode):
-        self._TTS.say(str(mode))
-        self._mode = mode
+        # self._TTS.say(str(mode))
+        print("try to change mode")
+        if (str(mode).__contains__("solar") or str(mode).__contains__("water")
+        or str(mode).__contains__("importation") or str(mode).__contains__("exportation")):
+            self._mode = mode
+            print("mode changed")
 
     def getMode(self):
         return self._mode

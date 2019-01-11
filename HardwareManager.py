@@ -234,7 +234,6 @@ class servoMotor:
         # test if in acceptable delta angle
         if(newMaxDelta<((self.maxAngle+self.minAngle)/2)):
             self.maxDelta = newMaxDelta
-            print(self.maxDelta)
 
     def changeAngle(self, newAngle):
         # test if acceptable
@@ -258,7 +257,6 @@ class servoMotor:
 
         while(tempAngle<(angle-0.05) or tempAngle>(angle+0.05)):
             tempAngle = tempAngle + float((angle-tempAngle)/3)
-            print(tempAngle)
 
             newDuty = float(tempAngle+(self.maxAngle-self.minAngle)/2)/float(self.maxAngle)
             newDuty = newDuty*float(self.maxDuty-self.minDuty)*0.9
