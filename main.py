@@ -14,7 +14,7 @@ servoMotor = servoMotor()
 logic = EnergyLogic(houseClient, consumption, production, display, servoMotor)
 
 
-class MonTestThread(threading.Thread):
+class DisplayThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -25,7 +25,7 @@ class MonTestThread(threading.Thread):
             # logic.otherLogic()
 
 
-class MonThreadModeChangement(threading.Thread):
+class ChangeModeThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -35,10 +35,10 @@ class MonThreadModeChangement(threading.Thread):
             # time.sleep(10)
 
 
-t = MonTestThread()
+t = DisplayThread()
 t.start()
 
-u = MonThreadModeChangement()
+u = ChangeModeThread()
 u.start()
 
 
