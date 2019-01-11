@@ -32,12 +32,10 @@ class SpeechProcessing:
         print('Listening... Press Ctrl+C to exit')
 
     def signal_handler(self, signal, frame):
-        global interrupted
-        interrupted = True
+        self.interrupted = True
 
     def interrupt_callback(self):
-        global interrupted
-        return interrupted
+        return self.interrupted
 
     def interact_with_device(self, recognizer, microphone):
         # check that recognizer and microphone arguments are appropriate type
