@@ -32,6 +32,7 @@ class MonThreadModeChangement(threading.Thread):
     def run(self):
         while True:
             logic.changeMode(raw_input("type the mode you want to go to (solar, water, exportation, importation): "))
+            # time.sleep(10)
 
 
 t = MonTestThread()

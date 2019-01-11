@@ -270,7 +270,6 @@ class servoMotor:
 
         # say to the servo to stop all moves
         self.servoPin.ChangeDutyCycle(0)
-        print("Angle changed")
 
 
 ##=====================================================================
