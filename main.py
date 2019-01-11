@@ -13,7 +13,6 @@ servoMotor = servoMotor()
 logic = EnergyLogic(houseClient, consumption, production, display, servoMotor)
 
 
-
 class DisplayThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -31,7 +30,7 @@ class ChangeModeThread(threading.Thread):
 
     def run(self):
         while True:
-            logic.changeMode(raw_input("type the mode you want to go to (solar, water, exportation, importation): "))
+            # .changeMode(raw_input("type the mode you want to go to (solar, water, exportation, importation): "))
             time.sleep(10)
 
 

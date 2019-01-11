@@ -3,36 +3,30 @@ import snowboydecoder
 import sys
 import signal
 import speech_recognition as sr
+from speaker_manager import TTS3
 
 
 class SpeechProcessing:
 
     def __init__(self, the_logic):
-    # def __init__(self):
         # if the stop word is detected
         self.stop_word_detected = False
         self.interrupted = False
-
         # check that there is a parameter for the recognition model
         if len(sys.argv) == 1:
             print("Error: need to specify model name")
-            print("Usage: python demo.py your.model")
             sys.exit(-1)
-
         self.startModel = sys.argv[1]    # start model, the one that launches the interaction
-
         # capture SIGINT signal, e.g., Ctrl+C
         signal.signal(signal.SIGINT, self.signal_handler)
-
         self.startDetector = snowboydecoder.HotwordDetector(self.startModel, sensitivity=0.5)
-
         # start the thread of the detector
         self.startDetector.start(detected_callback=self.start_word_detected,
                             interrupt_check=self.interrupt_callback,
                             sleep_time=0.03)
         print('Listening... Press Ctrl+C to exit')
-
         self._logic = the_logic
+        self.speaker = TTS3()
 
     def signal_handler(self, signal, frame):
         self.interrupted = True
@@ -98,17 +92,21 @@ class SpeechProcessing:
         elif text.__contains__("mode") and (text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production")):
             print("[cmd switch] : solar panel mode")
             self._logic.changeMode("solar")
+            self.speaker.say("mode solaire actif")
             return True
         elif text.__contains__("mode") and text.__contains__("import"):
             print("[cmd switch] : import mode")
             self._logic.changeMode("importation")
+            self.speaker.say("mode importation actif")
             return True
         elif text.__contains__("mode") and text.__contains__("export"):
             print("[cmd switch] : export mode")
             self._logic.changeMode("exportation")
+            self.speaker.say("mode exportation actif")
             return True
         elif text.__contains__("heure"):
             print("[cmd switch] : time mode")
+            self.speaker.say("mode montre actif")
             return True
         # wrong command
         else:
