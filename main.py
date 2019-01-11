@@ -5,13 +5,13 @@ import time
 import threading
 from HardwareManager import ledsMeter, servoMotor, sevenSegmentDigit
 
-houseClient = MqttClient("HouseClientConf.config")
+houseClient = MqttClient("HouseClientConf.config")  # this starts the thread mqtt
 consumption = ledsMeter(addressI2C=0x72, isInConsumption=True, valuePeak=8000)
 production = ledsMeter(addressI2C=0x71, isInConsumption=False, valuePeak=8000)
 display = sevenSegmentDigit()
 servoMotor = servoMotor()
 logic = EnergyLogic(houseClient, consumption, production, display, servoMotor)
-speechProcessing = SpeechProcessing()
+speechProcessing = SpeechProcessing(logic)  # this start the thread speech processing
 
 
 class DisplayThread(threading.Thread):

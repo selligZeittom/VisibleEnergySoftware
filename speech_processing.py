@@ -7,7 +7,7 @@ import speech_recognition as sr
 
 class SpeechProcessing:
 
-    def __init__(self):
+    def __init__(self, the_logic):
         # if the stop word is detected
         self.stop_word_detected = False
         self.interrupted = False
@@ -30,6 +30,8 @@ class SpeechProcessing:
                             interrupt_check=self.interrupt_callback,
                             sleep_time=0.03)
         print('Listening... Press Ctrl+C to exit')
+
+        self.logic = the_logic
 
     def signal_handler(self, signal, frame):
         self.interrupted = True
@@ -94,19 +96,18 @@ class SpeechProcessing:
         # switch mode
         elif text.__contains__("mode") and (text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production")):
             print("[cmd switch] : solar panel mode")
+            self.logic.changeMode("solar")
             return True
         elif text.__contains__("mode") and text.__contains__("import"):
             print("[cmd switch] : import mode")
+            self.logic.changeMode("importation")
             return True
         elif text.__contains__("mode") and text.__contains__("export"):
             print("[cmd switch] : export mode")
+            self.logic.changeMode("exportation")
             return True
         elif text.__contains__("heure"):
             print("[cmd switch] : time mode")
-            return True
-        # set an alarm
-        elif text.__contains__(u"réveil") or text.__contains__("alarm"):
-            print("[cmd set] : set an alarm")
             return True
         # wrong command
         else:

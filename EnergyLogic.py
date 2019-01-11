@@ -5,8 +5,8 @@ class EnergyLogic:
 
     def __init__(self, mqttClient, led1, led2, display, servoMotor):
         self._client = mqttClient
-        self._led1 = led1         #consumption led
-        self._led2 = led2          #prodution led
+        self._led1 = led1   # consumption led
+        self._led2 = led2   # production led
         self._display = display
         self._servo = servoMotor
         self._TTS = textSpeaker()
