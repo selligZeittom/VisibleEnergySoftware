@@ -1,0 +1,4 @@
+House with export power:
+	- 046
+	- 049
+	- 053
