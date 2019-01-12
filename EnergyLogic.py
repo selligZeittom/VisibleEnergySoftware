@@ -57,7 +57,6 @@ class EnergyLogic:
 
     def changeMode(self, mode):
         # self._TTS.say(str(mode))
-        print("try to change mode")
         if (str(mode).__contains__("solar") or str(mode).__contains__("water")
         or str(mode).__contains__("importation") or str(mode).__contains__("exportation")):
             self._mode = mode

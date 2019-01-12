@@ -19,8 +19,8 @@ class DisplayThread(threading.Thread):
 
     def run(self):
         while True:
-            time.sleep(10)
             logic.logic()
+            time.sleep(10)
             # logic.otherLogic()
 
 
@@ -30,7 +30,7 @@ class ChangeModeThread(threading.Thread):
 
     def run(self):
         while True:
-            # .changeMode(raw_input("type the mode you want to go to (solar, water, exportation, importation): "))
+            logic.changeMode(raw_input("type the mode you want to go to (solar, water, exportation, importation): "))
             time.sleep(10)
 
 
