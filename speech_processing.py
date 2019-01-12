@@ -91,14 +91,17 @@ class SpeechProcessing:
         # switch mode
         elif text.__contains__("mode") and (text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production")):
             self._logic.changeMode("solar")
+            self.speaker.say("mode panneau solaires")
             print("[cmd switch] : solar panel mode")
             return True
         elif text.__contains__("mode") and text.__contains__("import"):
             self._logic.changeMode("importation")
+            self.speaker.say("mode importation")
             print("[cmd switch] : import mode")
             return True
         elif text.__contains__("mode") and text.__contains__("export"):
             self._logic.changeMode("exportation")
+            self.speaker.say("mode exportation")
             print("[cmd switch] : export mode")
             return True
         elif text.__contains__("heure"):
@@ -106,10 +109,12 @@ class SpeechProcessing:
             return True
         # wrong command
         else:
+            self.speaker.say("je ne connais pas cette commande...")
             print("vocal command is not valid... try again ! ")
             return False
 
     def start_word_detected(self):
+        self.speaker.say(u"oui j'écoute")
         print("got the start keyword !")
         # first terminate the start detector
         self.startDetector.terminate()
