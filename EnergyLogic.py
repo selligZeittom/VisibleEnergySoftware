@@ -1,6 +1,3 @@
-from SpeakerManager import textSpeaker
-
-
 class EnergyLogic:
 
     def __init__(self, mqttClient, led1, led2, display, servoMotor):
@@ -9,7 +6,6 @@ class EnergyLogic:
         self._led2 = led2   # production led
         self._display = display
         self._servo = servoMotor
-        # self._TTS = textSpeaker()
         self._mode = "exportation"
 
     def logic(self):

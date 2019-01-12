@@ -22,6 +22,8 @@ class TTS3:
         engine = pyttsx3.init()
         rate = engine.getProperty('rate')
         engine.setProperty('rate', rate + 50)
+        voice = engine.getProperty('voices')[0]  # the french voice
+        engine.setProperty('voice', voice.id)
 
     def say(self, sentence):
         engine = pyttsx3.init()

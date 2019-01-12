@@ -10,6 +10,7 @@ class SpeechProcessing:
 
     def __init__(self, logic):
         self._logic = logic     # got the logic instance from main
+        self.speaker = TTS3()
         self.stop_word_detected = False    # if the stop word is detected
         self.interrupted = False
         # check that there is a parameter for the recognition model
@@ -25,7 +26,6 @@ class SpeechProcessing:
                                  interrupt_check=self.interrupt_callback,
                                  sleep_time=0.03)
         print('Listening... Press Ctrl+C to exit')
-        self.speaker = TTS3()
 
     def signal_handler(self, signal, frame):
         self.interrupted = True
@@ -84,6 +84,7 @@ class SpeechProcessing:
         # means that the user wants to stop the interaction with the device
         if text.__contains__("stop"):
             print("[cmd] : stop")
+            self.speaker.say("au revoir")
             self.stop_word_detected = True
             return True
 
