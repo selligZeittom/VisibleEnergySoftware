@@ -8,9 +8,9 @@ from speaker_manager import TTS3
 
 class SpeechProcessing:
 
-    def __init__(self, the_logic):
-        # if the stop word is detected
-        self.stop_word_detected = False
+    def __init__(self, logic):
+        self._logic = logic     # got the logic instance from main
+        self.stop_word_detected = False    # if the stop word is detected
         self.interrupted = False
         # check that there is a parameter for the recognition model
         if len(sys.argv) == 1:
@@ -22,10 +22,9 @@ class SpeechProcessing:
         self.startDetector = snowboydecoder.HotwordDetector(self.startModel, sensitivity=0.5)
         # start the thread of the detector
         self.startDetector.start(detected_callback=self.start_word_detected,
-                            interrupt_check=self.interrupt_callback,
-                            sleep_time=0.03)
+                                 interrupt_check=self.interrupt_callback,
+                                 sleep_time=0.03)
         print('Listening... Press Ctrl+C to exit')
-        self._logic = the_logic
         self.speaker = TTS3()
 
     def signal_handler(self, signal, frame):
@@ -44,7 +43,7 @@ class SpeechProcessing:
 
         with microphone as source:
             # adjust to the ambient noise
-            recognizer.adjust_for_ambient_noise(source, duration=0.5)
+            recognizer.adjust_for_ambient_noise(source, duration=0.1)
             print("let's talk to the device !")
 
             # set up the response object
@@ -56,7 +55,7 @@ class SpeechProcessing:
 
             # if there is sth to listen...
             try:
-                audio = recognizer.listen(source, timeout=3, phrase_time_limit=1)
+                audio = recognizer.listen(source, timeout=5, phrase_time_limit=2)
             except sr.WaitTimeoutError:
                 response["error"] = "Timeout"
                 return response
@@ -90,23 +89,19 @@ class SpeechProcessing:
 
         # switch mode
         elif text.__contains__("mode") and (text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production")):
-            print("[cmd switch] : solar panel mode")
             self._logic.changeMode("solar")
-            self.speaker.say("mode solaire actif")
+            print("[cmd switch] : solar panel mode")
             return True
         elif text.__contains__("mode") and text.__contains__("import"):
-            print("[cmd switch] : import mode")
             self._logic.changeMode("importation")
-            self.speaker.say("mode importation actif")
+            print("[cmd switch] : import mode")
             return True
         elif text.__contains__("mode") and text.__contains__("export"):
-            print("[cmd switch] : export mode")
             self._logic.changeMode("exportation")
-            self.speaker.say("mode exportation actif")
+            print("[cmd switch] : export mode")
             return True
         elif text.__contains__("heure"):
             print("[cmd switch] : time mode")
-            self.speaker.say("mode montre actif")
             return True
         # wrong command
         else:
@@ -140,7 +135,7 @@ class SpeechProcessing:
         # start the thread of the detector
         self.startDetector = snowboydecoder.HotwordDetector(self.startModel, sensitivity=0.5)
         self.startDetector.start(detected_callback=self.start_word_detected,
-                            interrupt_check=self.interrupt_callback,
-                            sleep_time=0.03)
+                                 interrupt_check=self.interrupt_callback,
+                                 sleep_time=0.03)
 
 
