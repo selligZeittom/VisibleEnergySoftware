@@ -158,6 +158,29 @@ class ledsMeter:
                 self.turnNbLed(-1)
                 break
 
+    def animation(self):
+        for j in range(0, 6):
+            for i in range(0, self.nbLeds):
+                if(normalMode == 0):    #means it's the right move
+                    invert = self.nbLeds - i - 1
+                else:                   #means it's in the inverse move
+                    invert = i
+                self.display1.clear()
+                if(j>=4):
+                    self.display1.set_bar(invert, BicolorBargraph24.RED)
+                else:
+                    if(j>=2):
+                        self.display1.set_bar(invert, BicolorBargraph24.YELLOW)
+                    else:
+                        self.display1.set_bar(invert, BicolorBargraph24.GREEN)
+
+                self.display1.write_display()
+                time.sleep(0.1)
+
+            if(invert == self.nbLeds -1):   #means it's the end of the reverse
+                normalMode = 1
+            else:
+                normalMode = 1
 
 
 
