@@ -89,17 +89,17 @@ class SpeechProcessing:
             return True
 
         # switch mode
-        elif text.__contains__("mode") and (text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production")):
+        elif text.__contains__("panneau") or text.__contains__("solaire") or text.__contains__("production"):
             self._logic.changeMode("solar")
             self.speaker.say("mode panneau solaires")
             print("[cmd switch] : solar panel mode")
             return True
-        elif text.__contains__("mode") and text.__contains__("import"):
+        elif text.__contains__("import") or text.__contains__("impression"):
             self._logic.changeMode("importation")
             self.speaker.say("mode importation")
             print("[cmd switch] : import mode")
             return True
-        elif text.__contains__("mode") and text.__contains__("export"):
+        elif text.__contains__("export"):
             self._logic.changeMode("exportation")
             self.speaker.say("mode exportation")
             print("[cmd switch] : export mode")
