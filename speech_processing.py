@@ -128,7 +128,8 @@ class SpeechProcessing:
         r = sr.Recognizer()
         m = sr.Microphone()
 
-        while True:
+        nTry = 0
+        while nTry < 10:
             res = self.interact_with_device(r, m)
             # if no exception was launched
             if res["error"] is None:
@@ -136,6 +137,8 @@ class SpeechProcessing:
                 processed = self.process_result(res["transcription"])
                 if processed is True or self.stop_word_detected is True:
                     break
+            else:   # if error is not none : only 10 try before sleep mode again
+                nTry += 1
 
         # if we come here : means that interaction is over
         self.stop_word_detected = False
