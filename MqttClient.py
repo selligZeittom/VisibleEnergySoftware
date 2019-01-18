@@ -47,7 +47,7 @@ class MqttClient:
         self._PM1 = 0
         self._PM2 = 0
         self._PM3 = 0
-        self._maxValue = 1500
+        self._maxValue = 3500
 
         if not self._useReconnectClient:
             self._client = mqtt.Client()

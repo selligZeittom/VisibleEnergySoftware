@@ -105,8 +105,10 @@ class SpeechProcessing:
             self.speaker.say("mode exportation")
             print("[cmd switch] : export mode")
             return True
-        elif text.__contains__("heure"):
-            print("[cmd switch] : time mode")
+        elif text.__contains__("eau") or text.__contains__("chauffe"):
+            self._logic.changeMode("water")
+            self.speaker.say("mode chauffe eau")
+            print("[cmd switch] : water mode")
             return True
         # wrong command
         else:
