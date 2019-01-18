@@ -8,8 +8,10 @@ from speaker_manager import TTS3
 
 class SpeechProcessing:
 
-    def __init__(self, logic):
+    def __init__(self, logic, consumption, production):
         self._logic = logic     # got the logic instance from main
+        self._consumption = consumption
+        self._production = production
         self.speaker = TTS3()
         self.stop_word_detected = False    # if the stop word is detected
         self.interrupted = False
@@ -76,7 +78,6 @@ class SpeechProcessing:
             print(response["error"])
         return response
 
-
     def process_result(self, result):
         text = unicode(result)  # cast into unicode
         text.lower()
@@ -115,6 +116,8 @@ class SpeechProcessing:
 
     def start_word_detected(self):
         self.speaker.say(u"oui j'écoute")
+        self._consumption.animation()
+        self._production.animation()
         print("got the start keyword !")
         # first terminate the start detector
         self.startDetector.terminate()
@@ -125,7 +128,8 @@ class SpeechProcessing:
         r = sr.Recognizer()
         m = sr.Microphone()
 
-        while True:
+        nTry = 0
+        while nTry < 10:
             res = self.interact_with_device(r, m)
             # if no exception was launched
             if res["error"] is None:
@@ -133,6 +137,8 @@ class SpeechProcessing:
                 processed = self.process_result(res["transcription"])
                 if processed is True or self.stop_word_detected is True:
                     break
+            else:   # if error is not none : only 10 try before sleep mode again
+                nTry += 1
 
         # if we come here : means that interaction is over
         self.stop_word_detected = False
