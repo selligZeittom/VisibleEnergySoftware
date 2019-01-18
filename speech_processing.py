@@ -82,7 +82,7 @@ class SpeechProcessing:
         text.lower()
 
         # means that the user wants to stop the interaction with the device
-        if text.__contains__("stop"):
+        if text.__contains__("stop") or text.__contains__("top"):
             print("[cmd] : stop")
             self.speaker.say("au revoir")
             self.stop_word_detected = True
@@ -94,7 +94,7 @@ class SpeechProcessing:
             self.speaker.say("mode panneau solaires")
             print("[cmd switch] : solar panel mode")
             return True
-        elif text.__contains__("import") or text.__contains__("impression"):
+        elif text.__contains__("import") or text.__contains__("impression"): # ok "impression" has nothing to do with importation, but it improves the recognition
             self._logic.changeMode("importation")
             self.speaker.say("mode importation")
             print("[cmd switch] : import mode")
