@@ -21,7 +21,7 @@ class DisplayThread(threading.Thread):
         while True:
             logic.logic()
             time.sleep(10)
-            # logic.otherLogic()
+            logic.otherLogic()
 
 
 class ChangeModeThread(threading.Thread):
@@ -40,7 +40,7 @@ t.start()
 u = ChangeModeThread()
 u.start()
 
-speechProcessing = SpeechProcessing(logic)  # this start the thread speech processing
+speechProcessing = SpeechProcessing(logic, consumption, production)  # this start the thread speech processing
 
 
 
