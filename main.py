@@ -20,7 +20,7 @@ class DisplayThread(threading.Thread):
     def run(self):
         while True:
             logic.logic()
-            time.sleep(10)
+            time.sleep(2)
             logic.otherLogic()
 
 
