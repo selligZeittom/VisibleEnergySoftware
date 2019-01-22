@@ -4,6 +4,7 @@ import sys
 import signal
 import speech_recognition as sr
 from speaker_manager import TTS3
+import thread
 
 
 class SpeechProcessing:
@@ -95,12 +96,12 @@ class SpeechProcessing:
             self.speaker.say("mode panneau solaires")
             print("[cmd switch] : solar panel mode")
             return True
-        elif text.__contains__("import") or text.__contains__("impression"): # ok "impression" has nothing to do with importation, but it improves the recognition
+        elif text.__contains__("import") or text.__contains__("impression") or text.__contains__("un portail"):
             self._logic.changeMode("importation")
             self.speaker.say("mode importation")
             print("[cmd switch] : import mode")
             return True
-        elif text.__contains__("export"):
+        elif text.__contains__("export") or text.__contains__("expression"):
             self._logic.changeMode("exportation")
             self.speaker.say("mode exportation")
             print("[cmd switch] : export mode")
@@ -117,9 +118,9 @@ class SpeechProcessing:
             return False
 
     def start_word_detected(self):
+        thread.start_new_thread(self._consumption.animation, ())
+        thread.start_new_thread(self._production.animation, ())
         self.speaker.say(u"oui j'écoute")
-        self._consumption.animation()
-        self._production.animation()
         print("got the start keyword !")
         # first terminate the start detector
         self.startDetector.terminate()

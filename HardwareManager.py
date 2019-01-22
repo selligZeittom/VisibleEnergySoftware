@@ -176,7 +176,7 @@ class ledsMeter:
                     self.display1.set_bar(invert, BicolorBargraph24.OFF)
 
                 self.display1.write_display()
-                time.sleep(0.001)
+                time.sleep(0.0002)
 
             if(invert == 0):   #means it's the end of the reverse
                 normalMode = 1
